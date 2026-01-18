@@ -1,0 +1,35 @@
+name: Daily Follow-Up Check
+
+on:
+  schedule:
+    # 10am PT is 6pm UTC (winter) or 5pm UTC (summer). 
+    # Defaulting to 6pm UTC.
+    - cron: '0 18 * * *'
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  check-followups:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run daily check
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+          USER_EMAIL: ${{ secrets.USER_EMAIL }}
+          INTERNAL_EMAILS: ${{ secrets.INTERNAL_EMAILS }}
+          MEETING_TYPES: ${{ secrets.MEETING_TYPES }}
+        run: python -m followup_agent.check_followups
