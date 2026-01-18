@@ -7,6 +7,7 @@ class SlackClient:
     def __init__(self, token: str = SLACK_BOT_TOKEN):
         self.client = WebClient(token=token)
         self.channel_id = SLACK_CHANNEL_ID
+        logging.info(f"SlackClient initialized. Channel: {self.channel_id}, Token starts with: {token[:10]}...")
 
     def post_message(self, blocks: list, text: str = "Meeting Follow-up Reminder"):
         """Sends a Block Kit message to Slack."""
