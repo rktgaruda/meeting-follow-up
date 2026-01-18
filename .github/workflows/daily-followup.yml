@@ -32,4 +32,4 @@ jobs:
           USER_EMAIL: ${{ secrets.USER_EMAIL }}
           INTERNAL_EMAILS: ${{ secrets.INTERNAL_EMAILS }}
           MEETING_TYPES: ${{ secrets.MEETING_TYPES }}
-        run: python -m followup_agent.check_followups
+        run: python check_followups.py

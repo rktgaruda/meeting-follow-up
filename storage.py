@@ -1,7 +1,7 @@
 import sqlite3
 import datetime
 from typing import List, Set
-from .config import DB_PATH
+from config import DB_PATH
 
 class Storage:
     def __init__(self, db_path: str = DB_PATH):

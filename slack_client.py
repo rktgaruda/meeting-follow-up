@@ -1,6 +1,6 @@
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
-from .config import SLACK_BOT_TOKEN, SLACK_CHANNEL_ID
+from config import SLACK_BOT_TOKEN, SLACK_CHANNEL_ID
 import logging
 
 class SlackClient:

@@ -2,12 +2,12 @@ import json
 import logging
 import datetime
 import anthropic
-from .config import (
+from config import (
     ANTHROPIC_API_KEY, USER_EMAIL, INTERNAL_EMAILS, 
     MEETING_TYPES, LOOKBACK_DAYS
 )
-from .storage import Storage
-from .slack_client import SlackClient
+from storage import Storage
+from slack_client import SlackClient
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')

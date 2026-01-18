@@ -4,9 +4,9 @@ import time
 import json
 import logging
 from flask import Flask, request, jsonify
-from .config import SLACK_SIGNING_SECRET
-from .storage import Storage
-from .slack_client import SlackClient
+from config import SLACK_SIGNING_SECRET
+from storage import Storage
+from slack_client import SlackClient
 
 app = Flask(__name__)
 storage = Storage()
