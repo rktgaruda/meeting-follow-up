@@ -68,8 +68,8 @@ If no follow-ups are needed, return: {{"followups": []}}
             # Note: We are using Claude 3.5 Sonnet which has access to MCP tools in the user's environment.
             # In this script execution context, we expect the tools to be available via the API.
             response = self.client.messages.create(
-                # Trying the most stable legacy version or the 'latest' string
-                model="claude-3-5-sonnet-20240620", 
+                # Updating to Claude 3.7 Sonnet, which should be active in 2026
+                model="claude-3-7-sonnet-20250224", 
                 max_tokens=2048,
                 system="You are a meticulous founders assistant with access to Clarify, Gmail, and Google Calendar tools.",
                 messages=[{"role": "user", "content": prompt}]

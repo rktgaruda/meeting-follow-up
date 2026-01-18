@@ -7,7 +7,11 @@ class SlackClient:
     def __init__(self, token: str = SLACK_BOT_TOKEN):
         self.client = WebClient(token=token)
         self.channel_id = SLACK_CHANNEL_ID
-        logging.info(f"SlackClient initialized. Channel: {self.channel_id}, Token starts with: {token[:10]}...")
+        if self.channel_id:
+            logging.info(f"SlackClient initialized. Channel ID length: {len(self.channel_id)}. ID starts/ends with: {self.channel_id[0]}...{self.channel_id[-1]}")
+        else:
+            logging.error("SlackClient initialized with NO Channel ID!")
+        logging.info(f"Token starts with: {token[:10]}...")
 
     def post_message(self, blocks: list, text: str = "Meeting Follow-up Reminder"):
         """Sends a Block Kit message to Slack."""
