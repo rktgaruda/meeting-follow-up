@@ -71,16 +71,6 @@ class SlackClient:
                 "text": {
                     "type": "mrkdwn",
                     "text": f"* {contact}* ({company})\n_{date}_ | {m_type}"
-                },
-                "accessory": {
-                    "type": "button",
-                    "text": {
-                        "type": "plain_text",
-                        "text": "Done ✓",
-                        "emoji": True
-                    },
-                    "action_id": "mark_done",
-                    "value": f"meeting_id:{meeting_id}"
                 }
             })
 

@@ -6,7 +6,6 @@ from config import (
     ANTHROPIC_API_KEY, USER_EMAIL, INTERNAL_EMAILS, 
     MEETING_TYPES, LOOKBACK_DAYS
 )
-from storage import Storage
 from slack_client import SlackClient
 
 # Configure logging
@@ -15,10 +14,9 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 class FollowUpAgent:
     def __init__(self):
         self.client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-        self.storage = Storage()
         self.slack = SlackClient()
 
-    def construct_prompt(self, completed_ids: set) -> str:
+    def construct_prompt(self) -> str:
         today = datetime.date.today()
         seven_days_ago = today - datetime.timedelta(days=LOOKBACK_DAYS)
         
@@ -30,7 +28,6 @@ You are a Founders Assistant agent. Your goal is to identify meetings that requi
 - Internal Team Emails (Exclude): {", ".join(INTERNAL_EMAILS)}
 - Meeting Types to Include: {", ".join(MEETING_TYPES)}
 - Date Range: {seven_days_ago} to {today}
-- Already Completed Meeting IDs (Do NOT include these): {", ".join(list(completed_ids))}
 
 **Your Task:**
 1. Call `Clarify:get-current-user` to confirm the user context.
@@ -39,7 +36,6 @@ You are a Founders Assistant agent. Your goal is to identify meetings that requi
    - Exclude internal meetings (where all participants are from the internal team list).
    - Exclude personal appointments or panels.
    - ONLY include meetings matching the Types to Include.
-   - Exclude any meetings with IDs in the "Already Completed" list provided above.
 4. For each remaining meeting, check if a follow-up has been sent:
    - Identify external participant emails.
    - Use `search_gmail_messages` to look for sent emails FROM {USER_EMAIL} TO those external participants since the meeting date.
@@ -66,8 +62,7 @@ If no follow-ups are needed, return: {{"followups": []}}
 
     def run_daily_check(self):
         logging.info("Starting daily follow-up check...")
-        completed_ids = self.storage.get_completed_ids()
-        prompt = self.construct_prompt(completed_ids)
+        prompt = self.construct_prompt()
 
         try:
             # Note: We are using Claude 3.5 Sonnet which has access to MCP tools in the user's environment.
