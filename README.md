@@ -1,4 +1,4 @@
-# Daily Founder Follow-Up Agent
+# Daily Founder Follow-Up Agent (meeting-follow-up)
 
 An automated system that identifies meetings requiring follow-up emails and sends a daily Slack message with interactive "Done" buttons.
 
